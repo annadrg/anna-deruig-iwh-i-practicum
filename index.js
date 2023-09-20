@@ -9,6 +9,26 @@ app.use(express.json());
 
 const PRIVATE_APP_ACCESS = "pat-eu1-0b271d98-e99a-4419-895d-70ca9039f6eb";
 
+// Get home page
+app.get("/", async (req, res) => {
+  const contacts =
+    "https://api.hubspot.com/crm/v3/objects/drivers?properties=name,team,age";
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    "Content-Type": "application/json",
+  };
+  try {
+    const resp = await axios.get(contacts, { headers });
+    const data = resp.data.results;
+    res.render("home", {
+      title: "Home | Integrating With HubSpot I Practicum",
+      data,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 // Get update form
 app.get("/update-cobj", async (req, res) => {
   res.render("updates", {
@@ -27,7 +47,7 @@ app.post("/update-cobj", async (req, res) => {
 
   try {
     await axios.post(updateRoute, { properties }, { headers });
-    res.redirect("back");
+    res.redirect("/");
   } catch (error) {
     console.error(error);
   }
