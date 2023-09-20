@@ -1,0 +1,18 @@
+
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body  
+    a(href="/") Return to the homepage   
+    h1 #{title}
+    form(method="post")
+        label(for="name") Name
+        input(type='text' name='name' required)
+        label(for="team") Team
+        input(type='text' name='team')
+        label(for="age") Age
+        input(type='number' name='age')
+        input(type='submit' value="Submit")
